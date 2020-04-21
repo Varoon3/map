@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>Test - UAEM COVID Mapping</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+
+    <!-- Adding TableTop --> 
+<script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+
+<!--     //Adding FullScreen
+ -->     
+ 	<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+
+
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,700;1,300&display=swap" rel="stylesheet">
+
+<style>
+
+body {
+    font-family: 'Roboto';
+    font-size: 22px;
+}
+
+p {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.info { 
+	padding: 6px 8px; 
+	font: 14px/16px Roboto, Helvetica, sans-serif; 
+	background: white; 
+	background: rgba(255,255,255,0.8); 
+	box-shadow: 0 0 15px rgba(0,0,0,0.2); 
+	border-radius: 5px; 
+} 
+
+.info h4 { 
+	margin: 0 0 5px; 
+	color: #262c33; 
+}
+
+.legend {
+    line-height: 18px;
+    color: #555;
+}
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+}
+
+</style>
+
+	
+</head>
+
+<body>
+	<h1 style="text-align:center;white-space:pre-wrap;"><strong>TRACKING <b>PUBLIC</b> INVESTMENT IN COVID-19 R&D</strong></h1><p style="text-align:center;white-space:pre-wrap;" class=""> 
+
+	<div id="mapid" style="width: 1000px; height: 500px; margin: 0 auto;"></div>
+
+<script>
+	var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+		mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+
+	var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr})
+
+	var vaccine = L.layerGroup();
+	var diagnostic = L.layerGroup();
+	var therapeutic = L.layerGroup();
+
+
+	var mymap = L.map('mapid', {
+		center: [40.717491, -100.674050],
+		zoom: 4,
+		layers: [grayscale]
+	});
+
+	mymap.addLayer(vaccine)
+	mymap.addLayer(diagnostic)
+	mymap.addLayer(therapeutic)
+
+
+	// From Chloropleth Example
+	var info = L.control();
+
+	// function getColor(d) {
+	// 	return d > 1000 ? '#800026' :
+	// 			d > 500  ? '#BD0026' :
+	// 			d > 200  ? '#E31A1C' :
+	// 			d > 100  ? '#FC4E2A' :
+	// 			d > 50   ? '#FD8D3C' :
+	// 			d > 20   ? '#FEB24C' :
+	// 			d > 10   ? '#FED976' :
+	// 						'#FFEDA0';
+	// }
+
+	info.onAdd = function (map) {
+	    this._div = L.DomUtil.create('div', 'info');
+	    this.update();
+	    return this._div;
+	};
+
+	info.update = function (props) {
+	    this._div.innerHTML = '<h4>Public Funding for COVID-19</h4>';
+	};
+
+	info.addTo(mymap);
+
+	var legend = L.control({position: 'bottomright'});
+
+	legend.onAdd = function (map) {
+
+	    var div = L.DomUtil.create('div', 'info legend'),
+	        labels = ['Vaccines', 'Diagnostics', 'Therapeutics'],
+	        color = ['#b5352b', '#24660f', '#0c1b87'];
+
+	    // loop through our density intervals and generate a label with a colored square for each interval
+	    for (var i = 0; i < labels.length; i++) {
+	        div.innerHTML +=
+	            '<i style="background:' + color[i] + '"></i> ' + labels[i] + '<br>';
+	    }
+
+	    return div;
+	};
+
+	legend.addTo(mymap);
+
+
+
+
+	L.marker([51.5, -0.09]).addTo(mymap)
+		.bindPopup("<b>Hello world!</b><br />I am a popup.");
+
+	L.circle([51.508, -0.11], 500, {
+		color: 'red',
+		fillColor: '#f03',
+		fillOpacity: 0.5
+	}).addTo(mymap).bindPopup("I am a circle.");
+
+
+	mymap.addControl(new L.Control.Fullscreen());
+
+
+	Tabletop.init({
+		// key: 'https://docs.google.com/spreadsheets/d/1gaM-d3VLp2nqj6zoxHcEEgMagEORZwTi3S4oE8a7lsY/edit?usp=sharing',
+		key: 'https://docs.google.com/spreadsheets/d/1gaM-d3VLp2nqj6zoxHcEEgMagEORZwTi3S4oE8a7lsY/edit?usp=sharing',
+		callback: addPoints,
+		parseNumbers: true,
+		simpleSheet: true
+	});
+
+	var overlays = {
+		"Vaccines": vaccine,
+		"Diagnostics": diagnostic,
+		"Therapeutics": therapeutic
+	};
+
+	L.control.layers({}, overlays, {collapsed: false}).addTo(mymap);
+
+
+	function addPoints(data, tabletop) {
+
+		tabletop.sheets('USA').elements.forEach(function (row) {
+
+			var total = parseFloat(row["Amount of NIH funding (2003-2019) (USD)"]) + parseFloat(row["Amount of NIH funding (2019-2020) (USD)"]) + parseFloat(row["Amount of other public funding eg DOD etc"]);
+
+			var radius = total > 100000 ? 100000 :
+						 total > 50000 ? 80000 :
+						 total > 10000 ? 50000 : 30000;
+
+			switch (row["Type of Research (Vaccine, Diagnostic, Therapeutic)"]) {
+
+				case "Vaccine":
+					L.circle([row.Latitude, row.Longitude], {radius: radius, color: '#b5352b', fillOpacity: 0.9}).bindPopup(
+						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Clinical, Preclinical)"] + '</span>' + '<br>' + 'NIH Funding (2003-2019) (USD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of NIH funding (2003-2019) (USD)"] + '</span>' + '<br>' + 'NIH Funding (2019-2020) (USD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of NIH funding (2019-2020) (USD)"] + '</span>' + '<br>' + 'Public Funding (Other) (USD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of other public funding eg DOD etc"] + '</span>' + '<br>' + 'URLs: ' + '<a href="' + row["Link_2"] + '">' + 'Link_1' + ', ' + '<a href="' + row["Link_3"] + '">' + 'Link_2' + '<br>' + '</p>', {maxWidth: 1000}).addTo(vaccine);
+					break;
+				case "Diagnostic":
+					L.circle([row.Latitude, row.Longitude], {radius: radius, color: '#24660f', fillOpacity: 0.5}).bindPopup(
+						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Clinical, Preclinical)"] + '</span>' + '<br>' + 'NIH Funding (2003-2019) (USD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of NIH funding (2003-2019) (USD)"] + '</span>' + '<br>' + 'NIH Funding (2019-2020) (USD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of NIH funding (2019-2020) (USD)"] + '</span>' + '<br>' + 'Public Funding (Other) (USD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of other public funding eg DOD etc"] + '</span>' + '<br>' + 'URLs: ' + '<a href="' + row["Link_2"] + '">' + 'Link_1' + ', ' + '<a href="' + row["Link_3"] + '">' + 'Link_2' + '<br>' + '</p>', {maxWidth: 1000}).addTo(diagnostic);
+					break;
+				case "Therapeutic":
+					L.circle([row.Latitude, row.Longitude], {radius: radius, color: '#0c1b87', fillOpacity: 0.2}).bindPopup(
+						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Clinical, Preclinical)"] + '</span>' + '<br>' + 'NIH Funding (2003-2019) (USD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of NIH funding (2003-2019) (USD)"] + '</span>' + '<br>' + 'NIH Funding (2019-2020) (USD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of NIH funding (2019-2020) (USD)"] + '</span>' + '<br>' + 'Public Funding (Other) (USD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of other public funding eg DOD etc"] + '</span>' + '<br>' + 'URLs: ' + '<a href="' + row["Link_2"] + '">' + 'Link_1' + ', ' + '<a href="' + row["Link_3"] + '">' + 'Link_2' + '<br>' + '</p>', {maxWidth: 1000}).addTo(therapeutic);
+					break;
+			}
+					
+
+		});
+
+
+		tabletop.sheets('Canada').elements.forEach(function (row) {
+
+			var total = parseFloat(row["Amount of CIHR funding (CAD)"]) + parseFloat(row["Amount of Genome Canada funding (CAD)"]) + parseFloat(row["Amount of other public funding (NSERC, SSHRC, CRCC, IDRC, CATCO, etc.) (CAD)"]);
+
+			var radius = total > 100000 ? 100000 :
+						 total > 50000 ? 80000 :
+						 total > 10000 ? 50000 : 30000;
+
+			switch (row["Type of Research (Vaccine, Diagnostic, Therapeutic)"]) {
+
+				case "Vaccine":
+					L.circle([row.Latitude, row.Longitude], {radius: radius, color: '#b5352b', fillOpacity: 0.9}).bindPopup(
+						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Clinical, Preclinical)"] + '</span>' + '<br>' + 'CIHR Funding (CAD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of CIHR funding (CAD)"] + '</span>' + '<br>' + 'Genome Canada Funding (CAD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of Genome Canada funding (CAD)"] + '</span>' + '<br>' + 'Public Funding (Other) (CAD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of other public funding (NSERC, SSHRC, CRCC, IDRC, CATCO, etc.) (CAD)"] + '</span>' + '<br>' + 'URLs: ' + '<a href="' + row["Link_1"] + '">' + 'Link_1' + '</a>' + ', ' + '<a href="' + row["Link_2"] + '">' + 'Link_2' + '</a>' + '<br>' + 'Principal Investigators: ' + '<span style="color:grey;font-weight:bold;">' + row["Principle_Investigators"] + '</span>' + '<br>' + '</p>', {maxWidth: 1000}).addTo(vaccine);
+					break;
+				case "Diagnostic":
+					L.circle([row.Latitude, row.Longitude], {radius: radius, color: '#24660f', fillOpacity: 0.5}).bindPopup(
+						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Clinical, Preclinical)"] + '</span>' + '<br>' + 'CIHR Funding (CAD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of CIHR funding (CAD)"] + '</span>' + '<br>' + 'Genome Canada Funding (CAD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of Genome Canada funding (CAD)"] + '</span>' + '<br>' + 'Public Funding (Other) (CAD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of other public funding (NSERC, SSHRC, CRCC, IDRC, CATCO, etc.) (CAD)"] + '</span>' + '<br>' + 'URLs: ' + '<a href="' + row["Link_1"] + '">' + 'Link_1' + '</a>' + ', ' + '<a href="' + row["Link_2"] + '">' + 'Link_2' + '</a>' + '<br>' + 'Principal Investigators: ' + '<span style="color:grey;font-weight:bold;">' + row["Principle_Investigators"] + '</span>' + '<br>' + '</p>', {maxWidth: 1000}).addTo(diagnostic);
+					break;
+				case "Therapeutic":
+					L.circle([row.Latitude, row.Longitude], {radius: radius, color: '#0c1b87', fillOpacity: 0.2}).bindPopup(
+						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Clinical, Preclinical)"] + '</span>' + '<br>' + 'CIHR Funding (CAD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of CIHR funding (CAD)"] + '</span>' + '<br>' + 'Genome Canada Funding (CAD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of Genome Canada funding (CAD)"] + '</span>' + '<br>' + 'Public Funding (Other) (CAD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of other public funding (NSERC, SSHRC, CRCC, IDRC, CATCO, etc.) (CAD)"] + '</span>' + '<br>' + 'URLs: ' + '<a href="' + row["Link_1"] + '">' + 'Link_1' + '</a>' + ', ' + '<a href="' + row["Link_2"] + '">' + 'Link_2' + '</a>' + '<br>' + 'Principal Investigators: ' + '<span style="color:grey;font-weight:bold;">' + row["Principle_Investigators"] + '</span>' + '<br>' + '</p>', {maxWidth: 1000}).addTo(therapeutic);
+					break;
+			}
+
+		});
+
+		tabletop.sheets('Australia').elements.forEach(function (row) {
+			L.circle([row.Latitude, row.Longitude]).addTo(mymap).bindPopup(`<h3>` + row.University + `</h3>`);
+
+		});
+
+
+
+	}
+
+
+
+
+
+</script>
+
+
+
+</body>
+</html>
