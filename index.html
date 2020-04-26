@@ -26,13 +26,22 @@
 <style>
 
 body {
-    font-family: 'Roboto';
+    font-family: 'Roboto Light';
     font-size: 22px;
+    margin-top: 100px;
+  	margin-bottom: 200px;
+  	margin-right: 350px;
+  	margin-left: 350px;
 }
 
 p {
   margin: 0 auto;
   text-align: center;
+  font-size: 15px;
+}
+
+h2 {
+    font-family: 'Roboto Light';
 }
 
 .info { 
@@ -67,9 +76,30 @@ p {
 </head>
 
 <body>
-	<h1 style="text-align:center;white-space:pre-wrap;"><strong>TRACKING <b>PUBLIC</b> INVESTMENT IN COVID-19 R&D</strong></h1><p style="text-align:center;white-space:pre-wrap;" class=""> 
+	<h1 style="text-align:center;white-space:pre-wrap;"><strong>TRACKING <i>PUBLIC</i> INVESTMENT IN COVID-19 R&D</strong></h1><p style="text-align:center;white-space:pre-wrap;" class=""> 
 
-	<div id="mapid" style="width: 1000px; height: 500px; margin: 0 auto;"></div>
+	<p style="text-align:left;white-space:pre-wrap;" class="">Researchers around the world are racing to develop targeted COVID-19 vaccines, therapies, diagnostic assays and tools. However, we still don't have guarantees around whether or not these medicines and related technologies will be affordable and accessible to all people once they've been tested. This tracking tool aims to map where public funding and tax-payer supported R&D initiatives are taking place, in order to better support policy making that will look to use every means necessary to ensure that those specific vaccines and related therapies are affordable to all.</p>
+
+	<br>
+	
+	<p style="text-align:left;white-space:pre-wrap;" class="">This tracking tool began data collection on March 15, 2020, and was publicly released on May 1, 2020. If you know of projects that are achieving specific funding, please click here to share that information to add to the database.</p>
+
+	<br>
+
+	<h2 style="text-align:left;white-space:pre-wrap;"><strong>Interactive Map</strong></h2>
+
+	<div id="mapid" style="width: 100%; height: 500px; margin: 0 auto;"></div>
+
+	<br>
+
+	<h2 style="text-align:left;white-space:pre-wrap;"><strong>Searchable Table</strong></h2><p style="text-align:left;white-space:pre-wrap;" class="">
+
+	<br>
+
+	<h2 style="text-align:left;white-space:pre-wrap;"><strong>Recent News</strong></h2><p style="text-align:left;white-space:pre-wrap;" class="">
+
+
+
 
 <script>
 	var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
@@ -94,20 +124,7 @@ p {
 	mymap.addLayer(diagnostic)
 	mymap.addLayer(therapeutic)
 
-
-	// From Chloropleth Example
 	var info = L.control();
-
-	// function getColor(d) {
-	// 	return d > 1000 ? '#800026' :
-	// 			d > 500  ? '#BD0026' :
-	// 			d > 200  ? '#E31A1C' :
-	// 			d > 100  ? '#FC4E2A' :
-	// 			d > 50   ? '#FD8D3C' :
-	// 			d > 20   ? '#FEB24C' :
-	// 			d > 10   ? '#FED976' :
-	// 						'#FFEDA0';
-	// }
 
 	info.onAdd = function (map) {
 	    this._div = L.DomUtil.create('div', 'info');
@@ -157,7 +174,6 @@ p {
 
 
 	Tabletop.init({
-		// key: 'https://docs.google.com/spreadsheets/d/1gaM-d3VLp2nqj6zoxHcEEgMagEORZwTi3S4oE8a7lsY/edit?usp=sharing',
 		key: 'https://docs.google.com/spreadsheets/d/1gaM-d3VLp2nqj6zoxHcEEgMagEORZwTi3S4oE8a7lsY/edit?usp=sharing',
 		callback: addPoints,
 		parseNumbers: true,
@@ -179,8 +195,8 @@ p {
 
 			var total = parseFloat(row["Amount of NIH funding (2003-2019) (USD)"]) + parseFloat(row["Amount of NIH funding (2019-2020) (USD)"]) + parseFloat(row["Amount of other public funding eg DOD etc"]);
 
-			var radius = total > 100000 ? 100000 :
-						 total > 50000 ? 80000 :
+			var radius = total > 200000 ? 100000 :
+						 total > 30000 ? 80000 :
 						 total > 10000 ? 50000 : 30000;
 
 			switch (row["Type of Research (Vaccine, Diagnostic, Therapeutic)"]) {
