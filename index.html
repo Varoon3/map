@@ -35,14 +35,99 @@ body {
 }
 
 p {
-  margin: 0 auto;
-  text-align: center;
-  font-size: 15px;
+  	margin: 0 auto;
+  	text-align: left;
+  	font-size: 15px;
 }
 
 h2 {
-    font-family: 'Roboto Light';
+   	font-family: 'Roboto Light';
 }
+
+
+footer {
+    font-family: 'Roboto Thin';
+    font-size: 14px;
+  	margin: 0 auto;
+}
+
+.btn {
+	border:none;
+	background-color: inherit;
+	padding: 14px 28px;
+	font-size: 16px;
+	cursor: pointer;
+	display: block;
+	margin:auto;
+}
+
+.whitepaper {
+	color: white;
+	background-color: black;
+}
+
+.whitepaper:hover {
+	background-color: #c7c7c7;
+	color: black;
+
+}
+
+.newdata {
+	color: white;
+	background-color: black;
+}
+
+.newdata:hover {
+	background-color: #c7c7c7;
+	color: black;
+}
+
+
+
+
+.container {
+	position: relative;
+	width: 100%;
+}
+
+.image {
+	opacity: 1;
+	display: block;
+	width: 100%;
+	height: auto;
+	transition: .5s ease;
+	backface-visibility: hidden;
+}
+
+.middle {
+	transition: .5s ease;
+  	opacity: 0;
+  	position: absolute;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+  	-ms-transform: translate(-50%, -50%);
+  	text-align: center;
+}
+
+.container:hover .image {
+  opacity: 0.3;
+}
+
+.container:hover .middle {
+  opacity: 1;
+}
+
+.text {
+  background-color: #c7c7c7;
+  color: black;
+  font-size: 18px;
+  padding: 16px 32px;
+}
+
+
+
+
 
 .info { 
 	padding: 6px 8px; 
@@ -52,6 +137,7 @@ h2 {
 	box-shadow: 0 0 15px rgba(0,0,0,0.2); 
 	border-radius: 5px; 
 } 
+
 
 .info h4 { 
 	margin: 0 0 5px; 
@@ -76,7 +162,7 @@ h2 {
 </head>
 
 <body>
-	<h1 style="text-align:center;white-space:pre-wrap;"><strong>TRACKING <i>PUBLIC</i> INVESTMENT IN COVID-19 R&D</strong></h1><p style="text-align:center;white-space:pre-wrap;" class=""> 
+	<h1 style="text-align:center;white-space:pre-wrap;"><strong>TRACKING <b>PUBLIC</b> INVESTMENT IN COVID-19 R&D</strong></h1><p style="text-align:center;white-space:pre-wrap;" class=""> 
 
 	<p style="text-align:left;white-space:pre-wrap;" class="">Researchers around the world are racing to develop targeted COVID-19 vaccines, therapies, diagnostic assays and tools. However, we still don't have guarantees around whether or not these medicines and related technologies will be affordable and accessible to all people once they've been tested. This tracking tool aims to map where public funding and tax-payer supported R&D initiatives are taking place, in order to better support policy making that will look to use every means necessary to ensure that those specific vaccines and related therapies are affordable to all.</p>
 
@@ -86,18 +172,61 @@ h2 {
 
 	<br>
 
+	<button class="btn whitepaper">Read Our White Paper</button>
+
+	<br>
+
 	<h2 style="text-align:left;white-space:pre-wrap;"><strong>Interactive Map</strong></h2>
 
 	<div id="mapid" style="width: 100%; height: 500px; margin: 0 auto;"></div>
 
 	<br>
 
-	<h2 style="text-align:left;white-space:pre-wrap;"><strong>Searchable Table</strong></h2><p style="text-align:left;white-space:pre-wrap;" class="">
+	<p style="text-align:left;white-space:pre-wrap;" class="">This tracking tool began data collection on March 15, 2020, and was publicly released on May 1, 2020. If you know of projects that are achieving specific funding, please click here to share that information to add to the database.</p>
 
 	<br>
 
-	<h2 style="text-align:left;white-space:pre-wrap;"><strong>Recent News</strong></h2><p style="text-align:left;white-space:pre-wrap;" class="">
+	<button class="btn newdata">Contribute New Data</button>
 
+	<br>
+
+	<br>
+
+	<h2 style="text-align:left;white-space:pre-wrap;"><strong>Searchable Table</strong></h2>
+
+	<div class="container">
+		<img src="https://jotformapps.s3.amazonaws.com/152924844748277238691_My_Contact_Form_-_Google_Sheets_2018_062009:46:13.png" alt="Google Sheets" class="image" width=100% height=100%>
+		<a href="http://google.com">
+		<div class="middle">
+			<div class="text">Go to Database</div>
+		</div>
+		</a>
+	</div>
+
+	<br>
+
+	<br>
+
+	<h2 style="text-align:left;white-space:pre-wrap;"><strong>Recent News</strong></h2>
+
+	<p><a href="https://www.thelancet.com/action/showPdf?pii=S2589-7500%2820%2930086-8">https://www.thelancet.com/action/showPdf?pii=S2589-7500%2820%2930086-8</a></p>
+
+	<br>
+
+	<br>
+
+	<p><a href="https://www.ncbi.nlm.nih.gov/research/coronavirus/">https://www.thelancet.com/action/showPdf?pii=S2589-7500%2820%2930086-8</a></p>
+
+	<br>
+
+	<br>
+
+
+	<div id="footerWrapper">
+		<footer id="footer">
+					Data collected and mapping tool built by UAEM, AMSA, SNMA students. Design inspired by 
+		</footer>
+	</div>
 
 
 
