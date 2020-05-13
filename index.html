@@ -2,136 +2,22 @@
 <html>
 <head>
 	
-	<title>Test - UAEM COVID Mapping</title>
+	<title>MAP FULL SIZE</title>
 
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
-	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 
     <!-- Adding TableTop --> 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
 
-<!--     //Adding FullScreen
- -->     
+	<!-- //Adding FullScreen -->     
  	<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
-	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
-
-
-	<link href="https://fonts.googleapis.com/css2?family=Roboto" rel="stylesheet">
+	<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet'/>
 
 <style>
-
-h1 {
-	font-family: 'Roboto';
-}
-
-
-h2 {
-   	font-family: 'Roboto Light';
-}
-
-
-body {
-    font-family: 'Roboto Thin';
-    font-size: 22px;
-    margin-top: 100px;
-  	margin-bottom: 200px;
-  	margin-right: 20%;
-  	margin-left: 20%;
-}
-
-p {
-  	margin: 0 auto;
-  	text-align: left;
-  	font-size: 15px;
-}
-
-
-footer {
-    font-family: 'Roboto Thin';
-    font-size: 14px;
-  	margin: 0 auto;
-}
-
-.btn {
-	border:none;
-	background-color: inherit;
-	padding: 14px 28px;
-	font-size: 16px;
-	cursor: pointer;
-	display: block;
-	margin:auto;
-}
-
-.whitepaper {
-	color: white;
-	background-color: black;
-}
-
-.whitepaper:hover {
-	background-color: #c7c7c7;
-	color: black;
-
-}
-
-.newdata {
-	color: white;
-	background-color: black;
-}
-
-.newdata:hover {
-	background-color: #c7c7c7;
-	color: black;
-}
-
-
-
-
-.container {
-	position: relative;
-	width: 100%;
-}
-
-.image {
-	opacity: 1;
-	display: block;
-	width: 100%;
-	height: auto;
-	transition: .5s ease;
-	backface-visibility: hidden;
-}
-
-.middle {
-	transition: .5s ease;
-  	opacity: 0;
-  	position: absolute;
-  	top: 50%;
-  	left: 50%;
-  	transform: translate(-50%, -50%);
-  	-ms-transform: translate(-50%, -50%);
-  	text-align: center;
-}
-
-.container:hover .image {
-  opacity: 0.3;
-}
-
-.container:hover .middle {
-  opacity: 1;
-}
-
-.text {
-  background-color: #c7c7c7;
-  color: black;
-  font-size: 18px;
-  padding: 16px 32px;
-}
-
-
 
 .info { 
 	padding: 6px 8px; 
@@ -152,6 +38,7 @@ footer {
     line-height: 18px;
     color: #555;
 }
+
 .legend i {
     width: 18px;
     height: 18px;
@@ -166,74 +53,8 @@ footer {
 </head>
 
 <body>
-	<h1 style="text-align:center;white-space:normal;">TRACKING PUBLIC INVESTMENT</h1>
-	<h2 style="text-align:center;white-space:normal;">In COVID-19 Research & Development</h2>
 
-	<p style="text-align:left;white-space:pre-wrap;" class="">Researchers around the world are racing to develop targeted COVID-19 vaccines, therapies, diagnostic assays and tools. However, we still don't have guarantees around whether or not these medicines and related technologies will be affordable and accessible to all people once they've been tested. This tracking tool aims to map where public funding and tax-payer supported R&D initiatives are taking place, in order to better support policy making that will look to use every means necessary to ensure that those specific vaccines and related therapies are affordable to all.</p>
-
-	<br>
-	
-	<p style="text-align:left;white-space:pre-wrap;" class="">This tracking tool began data collection on March 15, 2020, and was publicly released on May 1, 2020. If you know of projects that are achieving specific funding, please click here to share that information to add to the database.</p>
-
-	<br>
-
-	<button class="btn whitepaper">Read Our White Paper</button>
-
-	<br>
-
-	<h2 style="text-align:left;white-space:pre-wrap;"><strong>Interactive Map</strong></h2>
-
-	<div id="mapid" style="width: 100%; height: 500px; margin: 0 auto;"></div>
-
-	<br>
-
-	<p style="text-align:left;white-space:pre-wrap;" class="">This tracking tool began data collection on March 15, 2020, and was publicly released on May 1, 2020. If you know of projects that are achieving specific funding, please click here to share that information to add to the database.</p>
-
-	<br>
-
-	<button class="btn newdata">Contribute New Data</button>
-
-	<br>
-
-	<br>
-
-	<h2 style="text-align:left;white-space:pre-wrap;"><strong>Searchable Table</strong></h2>
-
-	<div class="container">
-		<img src="https://jotformapps.s3.amazonaws.com/152924844748277238691_My_Contact_Form_-_Google_Sheets_2018_062009:46:13.png" alt="Google Sheets" class="image" width=100% height=100%>
-		<a href="http://google.com">
-		<div class="middle">
-			<div class="text">Go to Database</div>
-		</div>
-		</a>
-	</div>
-
-	<br>
-
-	<br>
-
-	<h2 style="text-align:left;white-space:pre-wrap;"><strong>Recent News</strong></h2>
-
-	<p><a href="https://www.thelancet.com/action/showPdf?pii=S2589-7500%2820%2930086-8">https://www.thelancet.com/action/showPdf?pii=S2589-7500%2820%2930086-8</a></p>
-
-	<br>
-
-	<br>
-
-	<p><a href="https://www.ncbi.nlm.nih.gov/research/coronavirus/">https://www.thelancet.com/action/showPdf?pii=S2589-7500%2820%2930086-8</a></p>
-
-	<br>
-
-	<br>
-
-
-	<div id="footerWrapper">
-		<footer id="footer">
-					Data collected and mapping tool built by UAEM, AMSA, SNMA students. Design inspired by 
-		</footer>
-	</div>
-
-
+	<div id="mapid" style="width: 100%; height: 600px;"></div>
 
 <script>
 	var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
@@ -384,17 +205,9 @@ footer {
 
 		});
 
-
-
 	}
 
-
-
-
-
 </script>
-
-
 
 </body>
 </html>
