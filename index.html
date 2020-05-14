@@ -99,12 +99,12 @@
 
 	    var div = L.DomUtil.create('div', 'info legend'),
 	        labels = ['Vaccines', 'Diagnostics', 'Therapeutics'],
-	        color = ['#b5352b', '#24660f', '#0c1b87'];
+	        icon = ['vaccine.png', 'diagnostic.png', 'therapeutic.png'];
 
 	    // loop through our density intervals and generate a label with a colored square for each interval
 	    for (var i = 0; i < labels.length; i++) {
 	        div.innerHTML +=
-	            '<i style="background:' + color[i] + '"></i> ' + labels[i] + '<br>';
+	            '<img src="' + icon[i] + '" width="20" height="20" style="padding-right:12px;""> ' + labels[i] + '<br>';
 	    }
 
 	    return div;
@@ -117,7 +117,7 @@
 
 
 	Tabletop.init({
-		key: 'https://docs.google.com/spreadsheets/d/1gaM-d3VLp2nqj6zoxHcEEgMagEORZwTi3S4oE8a7lsY/edit?usp=sharing',
+		key: 'https://docs.google.com/spreadsheets/d/11SrwemuqE5HsbipdmBNNukQsM4qBHjQSawNl6K94GHY/edit?usp=sharing',
 		callback: addPoints,
 		parseNumbers: true,
 		simpleSheet: true
@@ -133,27 +133,23 @@
 
 	var vaccineIcon = L.icon({
 		iconUrl: 'vaccine.png',
-		iconSize: [35,35]
+		iconSize: [25,25]
 	});
 
 	var diagnosticIcon = L.icon({
 		iconUrl: 'diagnostic.png',
-		iconSize: [40,40]
+		iconSize: [30,30]
 	});
 
 	var therapeuticIcon = L.icon({
 		iconUrl: 'therapeutic.png',
-		iconSize: [35,35]
+		iconSize: [25,25]
 	});
-
-	L.marker([51.5, -0.09], {icon: vaccineIcon}).addTo(mymap);
-	L.marker([52.5, -0.09], {icon: diagnosticIcon}).addTo(mymap);
-	L.marker([53.5, -0.09], {icon: therapeuticIcon}).addTo(mymap);
 
 
 	function addPoints(data, tabletop) {
 
-		tabletop.sheets('USA').elements.forEach(function (row) {
+		tabletop.sheets('US Universities').elements.forEach(function (row) {
 
 			switch (row["Type of Research (Vaccine, Diagnostic, Therapeutic)"]) {
 
@@ -175,7 +171,7 @@
 		});
 
 
-		tabletop.sheets('Canada').elements.forEach(function (row) {
+		tabletop.sheets('Canadian Universities').elements.forEach(function (row) {
 
 
 			switch (row["Type of Research (Vaccine, Diagnostic, Therapeutic)"]) {
@@ -196,7 +192,7 @@
 
 		});
 
-		tabletop.sheets('Australia').elements.forEach(function (row) {
+		tabletop.sheets('Aus & NZ Universities').elements.forEach(function (row) {
 			L.circle([row.Latitude, row.Longitude]).addTo(mymap).bindPopup(`<h3>` + row.University + `</h3>`);
 
 		});
