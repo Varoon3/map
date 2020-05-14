@@ -113,18 +113,6 @@
 	legend.addTo(mymap);
 
 
-
-
-	L.marker([51.5, -0.09]).addTo(mymap)
-		.bindPopup("<b>Hello world!</b><br />I am a popup.");
-
-	L.circle([51.508, -0.11], 500, {
-		color: 'red',
-		fillColor: '#f03',
-		fillOpacity: 0.5
-	}).addTo(mymap).bindPopup("I am a circle.");
-
-
 	mymap.addControl(new L.Control.Fullscreen());
 
 
@@ -143,29 +131,42 @@
 
 	L.control.layers({}, overlays, {collapsed: false}).addTo(mymap);
 
+	var vaccineIcon = L.icon({
+		iconUrl: 'vaccine.png',
+		iconSize: [35,35]
+	});
+
+	var diagnosticIcon = L.icon({
+		iconUrl: 'diagnostic.png',
+		iconSize: [40,40]
+	});
+
+	var therapeuticIcon = L.icon({
+		iconUrl: 'therapeutic.png',
+		iconSize: [35,35]
+	});
+
+	L.marker([51.5, -0.09], {icon: vaccineIcon}).addTo(mymap);
+	L.marker([52.5, -0.09], {icon: diagnosticIcon}).addTo(mymap);
+	L.marker([53.5, -0.09], {icon: therapeuticIcon}).addTo(mymap);
+
 
 	function addPoints(data, tabletop) {
 
 		tabletop.sheets('USA').elements.forEach(function (row) {
 
-			var total = parseFloat(row["Amount of NIH funding (2003-2019) (USD)"]) + parseFloat(row["Amount of NIH funding (2019-2020) (USD)"]) + parseFloat(row["Amount of other public funding eg DOD etc"]);
-
-			var radius = total > 200000 ? 100000 :
-						 total > 30000 ? 80000 :
-						 total > 10000 ? 50000 : 30000;
-
 			switch (row["Type of Research (Vaccine, Diagnostic, Therapeutic)"]) {
 
 				case "Vaccine":
-					L.circle([row.Latitude, row.Longitude], {radius: radius, color: '#b5352b', fillOpacity: 0.2}).bindPopup(
+					L.marker([row.Latitude, row.Longitude], {icon: vaccineIcon}).bindPopup(
 						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Clinical, Preclinical)"] + '</span>' + '<br>' + 'NIH Funding (2003-2019) (USD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of NIH funding (2003-2019) (USD)"] + '</span>' + '<br>' + 'NIH Funding (2019-2020) (USD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of NIH funding (2019-2020) (USD)"] + '</span>' + '<br>' + 'Public Funding (Other) (USD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of other public funding eg DOD etc"] + '</span>' + '<br>' + 'URLs: ' + '<a href="' + row["Link_2"] + '">' + 'Link_1' + ', ' + '<a href="' + row["Link_3"] + '">' + 'Link_2' + '<br>' + '</p>', {maxWidth: 1000}).addTo(vaccine);
 					break;
 				case "Diagnostic":
-					L.circle([row.Latitude, row.Longitude], {radius: radius, color: '#24660f', fillOpacity: 0.2}).bindPopup(
+					L.marker([row.Latitude, row.Longitude], {icon: diagnosticIcon}).bindPopup(
 						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Clinical, Preclinical)"] + '</span>' + '<br>' + 'NIH Funding (2003-2019) (USD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of NIH funding (2003-2019) (USD)"] + '</span>' + '<br>' + 'NIH Funding (2019-2020) (USD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of NIH funding (2019-2020) (USD)"] + '</span>' + '<br>' + 'Public Funding (Other) (USD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of other public funding eg DOD etc"] + '</span>' + '<br>' + 'URLs: ' + '<a href="' + row["Link_2"] + '">' + 'Link_1' + ', ' + '<a href="' + row["Link_3"] + '">' + 'Link_2' + '<br>' + '</p>', {maxWidth: 1000}).addTo(diagnostic);
 					break;
 				case "Therapeutic":
-					L.circle([row.Latitude, row.Longitude], {radius: radius, color: '#0c1b87', fillOpacity: 0.2}).bindPopup(
+					L.marker([row.Latitude, row.Longitude], {icon: therapeuticIcon}).bindPopup(
 						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Clinical, Preclinical)"] + '</span>' + '<br>' + 'NIH Funding (2003-2019) (USD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of NIH funding (2003-2019) (USD)"] + '</span>' + '<br>' + 'NIH Funding (2019-2020) (USD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of NIH funding (2019-2020) (USD)"] + '</span>' + '<br>' + 'Public Funding (Other) (USD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of other public funding eg DOD etc"] + '</span>' + '<br>' + 'URLs: ' + '<a href="' + row["Link_2"] + '">' + 'Link_1' + ', ' + '<a href="' + row["Link_3"] + '">' + 'Link_2' + '<br>' + '</p>', {maxWidth: 1000}).addTo(therapeutic);
 					break;
 			}
@@ -176,24 +177,19 @@
 
 		tabletop.sheets('Canada').elements.forEach(function (row) {
 
-			var total = parseFloat(row["Amount of CIHR funding (CAD)"]) + parseFloat(row["Amount of Genome Canada funding (CAD)"]) + parseFloat(row["Amount of other public funding (NSERC, SSHRC, CRCC, IDRC, CATCO, etc.) (CAD)"]);
-
-			var radius = total > 100000 ? 100000 :
-						 total > 50000 ? 80000 :
-						 total > 10000 ? 50000 : 30000;
 
 			switch (row["Type of Research (Vaccine, Diagnostic, Therapeutic)"]) {
 
 				case "Vaccine":
-					L.circle([row.Latitude, row.Longitude], {radius: radius, color: '#b5352b', fillOpacity: 0.2}).bindPopup(
+					L.marker([row.Latitude, row.Longitude], {icon: vaccineIcon}).bindPopup(
 						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Clinical, Preclinical)"] + '</span>' + '<br>' + 'CIHR Funding (CAD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of CIHR funding (CAD)"] + '</span>' + '<br>' + 'Genome Canada Funding (CAD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of Genome Canada funding (CAD)"] + '</span>' + '<br>' + 'Public Funding (Other) (CAD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of other public funding (NSERC, SSHRC, CRCC, IDRC, CATCO, etc.) (CAD)"] + '</span>' + '<br>' + 'URLs: ' + '<a href="' + row["Link_1"] + '">' + 'Link_1' + '</a>' + ', ' + '<a href="' + row["Link_2"] + '">' + 'Link_2' + '</a>' + '<br>' + 'Principal Investigators: ' + '<span style="color:grey;font-weight:bold;">' + row["Principle_Investigators"] + '</span>' + '<br>' + '</p>', {maxWidth: 1000}).addTo(vaccine);
 					break;
 				case "Diagnostic":
-					L.circle([row.Latitude, row.Longitude], {radius: radius, color: '#24660f', fillOpacity: 0.2}).bindPopup(
+					L.marker([row.Latitude, row.Longitude], {icon: diagnosticIcon}).bindPopup(
 						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Clinical, Preclinical)"] + '</span>' + '<br>' + 'CIHR Funding (CAD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of CIHR funding (CAD)"] + '</span>' + '<br>' + 'Genome Canada Funding (CAD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of Genome Canada funding (CAD)"] + '</span>' + '<br>' + 'Public Funding (Other) (CAD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of other public funding (NSERC, SSHRC, CRCC, IDRC, CATCO, etc.) (CAD)"] + '</span>' + '<br>' + 'URLs: ' + '<a href="' + row["Link_1"] + '">' + 'Link_1' + '</a>' + ', ' + '<a href="' + row["Link_2"] + '">' + 'Link_2' + '</a>' + '<br>' + 'Principal Investigators: ' + '<span style="color:grey;font-weight:bold;">' + row["Principle_Investigators"] + '</span>' + '<br>' + '</p>', {maxWidth: 1000}).addTo(diagnostic);
 					break;
 				case "Therapeutic":
-					L.circle([row.Latitude, row.Longitude], {radius: radius, color: '#0c1b87', fillOpacity: 0.2}).bindPopup(
+					L.marker([row.Latitude, row.Longitude], {icon: therapeuticIcon}).bindPopup(
 						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Clinical, Preclinical)"] + '</span>' + '<br>' + 'CIHR Funding (CAD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of CIHR funding (CAD)"] + '</span>' + '<br>' + 'Genome Canada Funding (CAD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of Genome Canada funding (CAD)"] + '</span>' + '<br>' + 'Public Funding (Other) (CAD): $' + '<span style="color:grey;font-weight:bold;">' + row["Amount of other public funding (NSERC, SSHRC, CRCC, IDRC, CATCO, etc.) (CAD)"] + '</span>' + '<br>' + 'URLs: ' + '<a href="' + row["Link_1"] + '">' + 'Link_1' + '</a>' + ', ' + '<a href="' + row["Link_2"] + '">' + 'Link_2' + '</a>' + '<br>' + 'Principal Investigators: ' + '<span style="color:grey;font-weight:bold;">' + row["Principle_Investigators"] + '</span>' + '<br>' + '</p>', {maxWidth: 1000}).addTo(therapeutic);
 					break;
 			}
