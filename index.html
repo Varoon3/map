@@ -2,7 +2,7 @@
 <html>
 <head>
 	
-	<title>MAP FULL SIZE</title>
+	<title>COVID-19 Global Public Funding Map</title>
 
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,8 +25,6 @@
 	<!-- After Leaflet and Leaflet.markercluster scripts -->
 	<script src="https://unpkg.com/leaflet.markercluster.layersupport@2.0.1/dist/leaflet.markercluster.layersupport.js"></script>
 
-	<!-- Search -->
-	<link rel="stylesheet" href="https://unpkg.com/src/leaflet-search.css" />
 
 
 
@@ -528,9 +526,9 @@
 
 			if (row["Link_1"] != "") {
 				URL = URL + '<a href="' + row["Link_1"] + '" target="_blank">' + 'Link_1';
-				if (row["Link_2"] != "") {
+				if (row["Link_2"] != "" && row["Link_2"] != undefined) {
 					URL = URL + ', <a href="' + row["Link_2"] + '" target="_blank">' + 'Link_2';
-					if (row["Link_3"] != "") {
+					if (row["Link_3"] != "" && row["Link_3"] != undefined) {
 						URL = URL + ', <a href="' + row["Link_3"] + '" target="_blank">' + 'Link_3';
 					}
 				}
@@ -541,17 +539,17 @@
 
 				case "Vaccine":
 					var marker = L.marker([row.Latitude, row.Longitude], {icon: vaccineIcon}).bindPopup(
-						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Preclinical, Clinical)"] + '</span>' + '<br>' + 'Total funding (€): ' + '<span style="color:grey;font-weight:bold;">' + row["Total funding (€)"] + '</span>' + '<br>'+ URL + '</a>' + '<br>' + 'Project Title: ' + '<span style="color:grey;font-weight:bold;">' + row["Project Title"] + '</span>' + '<br>' + '</p>', {maxwidth: 500});
+						`<h3>` + row.Institution + `</h3>` + '<p style="text-align:left;">' + 'Type of Research: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Type of Recipient: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Type of Recipient Institution"] + '</span>' + '<br>' + 'Total funding (€): ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Total funding (€)"] + '</span>' + '<br>' + 'Funding Mechanism: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Funding Mechanism"] + '</span>' + '<br>' + 'Project Title: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Project Title"] + '</span>' + '<br>' + 'Grant Period: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Grant Period"] + '</span>' + '<br>' + 'Research Stage: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Research Stage"] + '</span>' + '<br>'  + URL + '</span>' + '<br>' + '</p>', {maxwidth: 700});
 					marker.addTo(vaccine);
 					break;
 				case "Diagnostic":
 					var marker = L.marker([row.Latitude, row.Longitude], {icon: diagnosticIcon}).bindPopup(
-						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Preclinical, Clinical)"] + '</span>' + '<br>' + 'Total funding (€): ' + '<span style="color:grey;font-weight:bold;">' + row["Total funding (€)"] + '</span>' + '<br>'+ URL + '</a>' + '<br>' + 'Project Title: ' + '<span style="color:grey;font-weight:bold;">' + row["Project Title"] + '</span>' + '<br>' + '</p>', {maxwidth: 500});
+						`<h3>` + row.Institution + `</h3>` + '<p style="text-align:left;">' + 'Type of Research: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Type of Recipient: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Type of Recipient Institution"] + '</span>' + '<br>' + 'Total funding (€): ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Total funding (€)"] + '</span>' + '<br>' + 'Funding Mechanism: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Funding Mechanism"] + '</span>' + '<br>' + 'Project Title: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Project Title"] + '</span>' + '<br>' + 'Grant Period: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Grant Period"] + '</span>' + '<br>' + 'Research Stage: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Research Stage"] + '</span>' + '<br>'  + URL + '</span>' + '<br>' + '</p>', {maxwidth: 700});
 					marker.addTo(diagnostic);
 					break;
 				case "Therapeutic":
 					var marker = L.marker([row.Latitude, row.Longitude], {icon: therapeuticIcon}).bindPopup(
-						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Preclinical, Clinical)"] + '</span>' + '<br>' + 'Total funding (€): ' + '<span style="color:grey;font-weight:bold;">' + row["Total funding (€)"] + '</span>' + '<br>'+ URL + '</a>' + '<br>' + 'Project Title: ' + '<span style="color:grey;font-weight:bold;">' + row["Project Title"] + '</span>' + '<br>' + '</p>', {maxwidth: 500});
+						`<h3>` + row.Institution + `</h3>` + '<p style="text-align:left;">' + 'Type of Research: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Type of Recipient: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Type of Recipient Institution"] + '</span>' + '<br>' + 'Total funding (€): ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Total funding (€)"] + '</span>' + '<br>' + 'Funding Mechanism: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Funding Mechanism"] + '</span>' + '<br>' + 'Project Title: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Project Title"] + '</span>' + '<br>' + 'Grant Period: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Grant Period"] + '</span>' + '<br>' + 'Research Stage: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Research Stage"] + '</span>' + '<br>'  + URL + '</span>' + '<br>' + '</p>', {maxwidth: 700});
 					marker.addTo(therapeutic);
 					break;
 			}
