@@ -78,6 +78,7 @@
 	var vaccine = L.layerGroup();
 	var diagnostic = L.layerGroup();
 	var therapeutic = L.layerGroup();
+	var pledges = L.layerGroup();
 
 
 	var mymap = L.map('mapid', {
@@ -108,8 +109,8 @@
 	legend.onAdd = function (map) {
 
 	    var div = L.DomUtil.create('div', 'info legend'),
-	        labels = ['Vaccines', 'Diagnostics', 'Therapeutics'],
-	        icon = ['vaccine.png', 'diagnostic.png', 'therapeutic.png'];
+	        labels = ['Vaccines', 'Diagnostics', 'Therapeutics', 'COVID-19 Research Coalition Member', 'Open COVID Pledge Signatory'],
+	        icon = ['vaccine.png', 'diagnostic.png', 'therapeutic.png', 'covidcoalition.png', 'opencovidpledge.png'];
 
 	    // loop through our density intervals and generate a label with a colored square for each interval
 	    for (var i = 0; i < labels.length; i++) {
@@ -136,7 +137,8 @@
 	var overlays = {
 		"Vaccines": vaccine,
 		"Diagnostics": diagnostic,
-		"Therapeutics": therapeutic
+		"Therapeutics": therapeutic,
+		"COVID Pledges": pledges
 	};
 
 	L.control.layers({}, overlays, {collapsed: false}).addTo(mymap);
@@ -156,8 +158,20 @@
 		iconSize: [27,27]
 	});
 
+	var covidcoalitionIcon = L.icon({
+		iconUrl: 'covidcoalition.png',
+		iconSize: [30,30]
+	})
+
+	var opencovidIcon = L.icon({
+		iconUrl: 'opencovidpledge.png',
+		iconSize: [25,25]
+	})
+
 
 	function addPoints(data, tabletop) {
+
+
 
 		tabletop.sheets('US Universities').elements.forEach(function (row) {
 
@@ -193,7 +207,6 @@
 					break;
 			}
 					
-
 		});
 
 
@@ -626,14 +639,40 @@
 			}
 		});
 
+		tabletop.sheets('COVID Pledges').elements.forEach(function (row) {
+
+			var URL = 'URL: ';
+
+			if (row["Link_1"] != "") {
+				URL = URL + '<a href="' + row["Link_1"] + '" target="_blank">' + 'Link_1';
+			}
+
+
+			switch (row["Pledge"]) {
+
+				case "COVID-19 Clinical Research Coalition":
+					var marker = L.marker([row.Latitude, row.Longitude], {icon: covidcoalitionIcon}).bindPopup(
+						`<h3>` + row.Institution + `</h3>` + '<p style="text-align:left;">' + 'The ' + '<span style="color:grey;font-weight:bold;">' + row["Pledge"] + '</span>' + ' includes a signatory from this University/Governmental-based Institution. ' + '<br>' + '<br>' + URL + '</p>', {maxwidth: 500}).addTo(mymap);
+					marker.addTo(pledges);
+					break;
+				case "Open COVID Pledge":
+					var marker = L.marker([row.Latitude, row.Longitude], {icon: opencovidIcon}).bindPopup(
+						`<h3>` + row.Institution + `</h3>` + '<p style="text-align:left;">' + 'The ' + '<span style="color:grey;font-weight:bold;">' + row["Pledge"] + '</span>' + ' includes a signatory from this University/Governmental-based Institution. ' + '<br>' + '<br>' + URL + '</p>', {maxwidth: 500}).addTo(mymap);
+					marker.addTo(pledges);
+					break;
+			}
+		});
+
 		cluster.addTo(mymap);
 		cluster.checkIn(vaccine);
 		cluster.checkIn(therapeutic);
 		cluster.checkIn(diagnostic);
+		cluster.checkIn(pledges);
 
 		mymap.addLayer(vaccine);
 		mymap.addLayer(diagnostic);
 		mymap.addLayer(therapeutic);
+		mymap.addLayer(pledges);
 
 
 
