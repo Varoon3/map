@@ -58,6 +58,32 @@
     opacity: 0.7;
 }
 
+.marker-cluster-small {
+background-color: rgba(104, 140, 186, 0.6) !important;
+font: Roboto;
+}
+.marker-cluster-small div {
+background-color: rgba(104, 140, 186, 0.6) !important;
+font: Roboto;
+
+}
+.marker-cluster-medium {
+background-color: rgba(207, 212, 110, 0.6) !important;
+font: Roboto;
+}
+.marker-cluster-medium div {
+background-color: rgba(207, 212, 110, 0.6) !important;
+font: Roboto;
+}
+.marker-cluster-large {
+background-color: rgba(212, 110, 110, 0.6) !important;
+font: Roboto;
+}
+.marker-cluster-large div {
+background-color: rgba(212, 110, 110, 0.6) !important;
+font: Roboto;
+}
+
 </style>
 
 	
@@ -109,7 +135,7 @@
 	legend.onAdd = function (map) {
 
 	    var div = L.DomUtil.create('div', 'info legend'),
-	        labels = ['Vaccines', 'Diagnostics', 'Therapeutics', 'COVID-19 Research Coalition Member', 'Open COVID Pledge Signatory'],
+	        labels = ['Vaccines', 'Diagnostics', 'Therapeutics', 'COVID Research Coalition', 'Open COVID Pledge'],
 	        icon = ['vaccine.png', 'diagnostic.png', 'therapeutic.png', 'covidcoalition.png', 'opencovidpledge.png'];
 
 	    // loop through our density intervals and generate a label with a colored square for each interval
@@ -138,7 +164,7 @@
 		"Vaccines": vaccine,
 		"Diagnostics": diagnostic,
 		"Therapeutics": therapeutic,
-		"COVID Pledges": pledges
+		"COVID-19 Pledges": pledges
 	};
 
 	L.control.layers({}, overlays, {collapsed: false}).addTo(mymap);
@@ -428,40 +454,40 @@
 			}
 		});
 
-		tabletop.sheets('EU Universities').elements.forEach(function (row) {
+		// tabletop.sheets('EU Universities').elements.forEach(function (row) {
 
-			var URL = 'URLs: ';
+		// 	var URL = 'URLs: ';
 
-			if (row["Link_1"] != "") {
-				URL = URL + '<a href="' + row["Link_1"] + '" target="_blank">' + 'Link_1';
-				if (row["Link_2"] != "") {
-					URL = URL + ', <a href="' + row["Link_2"] + '" target="_blank">' + 'Link_2';
-					if (row["Link_3"] != "") {
-						URL = URL + ', <a href="' + row["Link_3"] + '" target="_blank">' + 'Link_3';
-					}
-				}
-			}
+		// 	if (row["Link_1"] != "") {
+		// 		URL = URL + '<a href="' + row["Link_1"] + '" target="_blank">' + 'Link_1';
+		// 		if (row["Link_2"] != "") {
+		// 			URL = URL + ', <a href="' + row["Link_2"] + '" target="_blank">' + 'Link_2';
+		// 			if (row["Link_3"] != "") {
+		// 				URL = URL + ', <a href="' + row["Link_3"] + '" target="_blank">' + 'Link_3';
+		// 			}
+		// 		}
+		// 	}
 
 
-			switch (row["Type of Research (Vaccine, Diagnostic, Therapeutic)"]) {
+		// 	switch (row["Type of Research (Vaccine, Diagnostic, Therapeutic)"]) {
 
-				case "Vaccine":
-					var marker = L.marker([row.Latitude, row.Longitude], {icon: vaccineIcon}).bindPopup(
-						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Preclinical, Clinical)"] + '</span>' + '<br>' + 'Total funding (€): ' + '<span style="color:grey;font-weight:bold;">' + row["Total funding (€)"] + '</span>' + '<br>'+ URL + '</a>' + '<br>' + 'Project Title: ' + '<span style="color:grey;font-weight:bold;">' + row["Project Title"] + '</span>' + '<br>' + '</p>', {maxwidth: 500});
-					marker.addTo(vaccine);
-					break;
-				case "Diagnostic":
-					var marker = L.marker([row.Latitude, row.Longitude], {icon: diagnosticIcon}).bindPopup(
-						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Preclinical, Clinical)"] + '</span>' + '<br>' + 'Total funding (€): ' + '<span style="color:grey;font-weight:bold;">' + row["Total funding (€)"] + '</span>' + '<br>'+ URL + '</a>' + '<br>' + 'Project Title: ' + '<span style="color:grey;font-weight:bold;">' + row["Project Title"] + '</span>' + '<br>' + '</p>', {maxwidth: 500});
-					marker.addTo(diagnostic);
-					break;
-				case "Therapeutic":
-					var marker = L.marker([row.Latitude, row.Longitude], {icon: therapeuticIcon}).bindPopup(
-						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Preclinical, Clinical)"] + '</span>' + '<br>' + 'Total funding (€): ' + '<span style="color:grey;font-weight:bold;">' + row["Total funding (€)"] + '</span>' + '<br>'+ URL + '</a>' + '<br>' + 'Project Title: ' + '<span style="color:grey;font-weight:bold;">' + row["Project Title"] + '</span>' + '<br>' + '</p>', {maxwidth: 500});
-					marker.addTo(therapeutic);
-					break;
-			}
-		});
+		// 		case "Vaccine":
+		// 			var marker = L.marker([row.Latitude, row.Longitude], {icon: vaccineIcon}).bindPopup(
+		// 				`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Preclinical, Clinical)"] + '</span>' + '<br>' + 'Total funding (€): ' + '<span style="color:grey;font-weight:bold;">' + row["Total funding (€)"] + '</span>' + '<br>'+ URL + '</a>' + '<br>' + 'Project Title: ' + '<span style="color:grey;font-weight:bold;">' + row["Project Title"] + '</span>' + '<br>' + '</p>', {maxwidth: 500});
+		// 			marker.addTo(vaccine);
+		// 			break;
+		// 		case "Diagnostic":
+		// 			var marker = L.marker([row.Latitude, row.Longitude], {icon: diagnosticIcon}).bindPopup(
+		// 				`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Preclinical, Clinical)"] + '</span>' + '<br>' + 'Total funding (€): ' + '<span style="color:grey;font-weight:bold;">' + row["Total funding (€)"] + '</span>' + '<br>'+ URL + '</a>' + '<br>' + 'Project Title: ' + '<span style="color:grey;font-weight:bold;">' + row["Project Title"] + '</span>' + '<br>' + '</p>', {maxwidth: 500});
+		// 			marker.addTo(diagnostic);
+		// 			break;
+		// 		case "Therapeutic":
+		// 			var marker = L.marker([row.Latitude, row.Longitude], {icon: therapeuticIcon}).bindPopup(
+		// 				`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Preclinical, Clinical)"] + '</span>' + '<br>' + 'Total funding (€): ' + '<span style="color:grey;font-weight:bold;">' + row["Total funding (€)"] + '</span>' + '<br>'+ URL + '</a>' + '<br>' + 'Project Title: ' + '<span style="color:grey;font-weight:bold;">' + row["Project Title"] + '</span>' + '<br>' + '</p>', {maxwidth: 500});
+		// 			marker.addTo(therapeutic);
+		// 			break;
+		// 	}
+		// });
 
 		tabletop.sheets('France Universities').elements.forEach(function (row) {
 
@@ -610,9 +636,9 @@
 
 			if (row["Link_1"] != "") {
 				URL = URL + '<a href="' + row["Link_1"] + '" target="_blank">' + 'Link_1';
-				if (row["Link_2"] != "") {
+				if (row["Link_2"] != "" && row["Link_2"] != undefined) {
 					URL = URL + ', <a href="' + row["Link_2"] + '" target="_blank">' + 'Link_2';
-					if (row["Link_3"] != "") {
+					if (row["Link_3"] != "" && row["Link_3"] != undefined) {
 						URL = URL + ', <a href="' + row["Link_3"] + '" target="_blank">' + 'Link_3';
 					}
 				}
@@ -623,17 +649,17 @@
 
 				case "Vaccine":
 					var marker = L.marker([row.Latitude, row.Longitude], {icon: vaccineIcon}).bindPopup(
-						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Preclinical, Clinical)"] + '</span>' + '<br>' + 'Total funding (£): ' + '<span style="color:grey;font-weight:bold;">' + row["Total funding (£)"] + '</span>' + '<br>'+ URL + '</a>' + '<br>' + 'Project Title: ' + '<span style="color:grey;font-weight:bold;">' + row["Project Title"] + '</span>' + '<br>' + '</p>', {maxwidth: 500});
+						`<h3>` + row.Institution + `</h3>` + '<p style="text-align:left;">' + 'Type of Research: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Total funding (€): ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Total funding (€)"] + '</span>' + '<br>' + 'Funding Mechanism: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Funding Mechanism"] + '</span>' + '<br>' + 'Project Title: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Project Title"] + '</span>' + '<br>' + 'Grant Period: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Grant Period"] + '</span>' + '<br>' + 'Research Stage: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Research Stage"] + '</span>' + '<br>'  + URL + '</span>' + '<br>' + '</p>', {maxwidth: 700});
 					marker.addTo(vaccine);
 					break;
 				case "Diagnostic":
-					var marker = L.marker([row.Latitude, row.Longitude], {icon: diagnosticIcon}).bindPopup(
-						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Preclinical, Clinical)"] + '</span>' + '<br>' + 'Total funding (£): ' + '<span style="color:grey;font-weight:bold;">' + row["Total funding (£)"] + '</span>' + '<br>'+ URL + '</a>' + '<br>' + 'Project Title: ' + '<span style="color:grey;font-weight:bold;">' + row["Project Title"] + '</span>' + '<br>' + '</p>', {maxwidth: 500});
+					var marker = L.marker([row.Latitude, row.Longitude], {icon: vaccineIcon}).bindPopup(
+						`<h3>` + row.Institution + `</h3>` + '<p style="text-align:left;">' + 'Type of Research: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Total funding (€): ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Total funding (€)"] + '</span>' + '<br>' + 'Funding Mechanism: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Funding Mechanism"] + '</span>' + '<br>' + 'Project Title: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Project Title"] + '</span>' + '<br>' + 'Grant Period: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Grant Period"] + '</span>' + '<br>' + 'Research Stage: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Research Stage"] + '</span>' + '<br>'  + URL + '</span>' + '<br>' + '</p>', {maxwidth: 700});
 					marker.addTo(diagnostic);
 					break;
 				case "Therapeutic":
-					var marker = L.marker([row.Latitude, row.Longitude], {icon: therapeuticIcon}).bindPopup(
-						`<h3>` + row.University + `</h3>` + '<p style="text-align:left;">' + 'Type: ' + '<span style="color:grey;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Stage: ' + '<span style="color:grey;font-weight:bold;">' + row["Stage (Preclinical, Clinical)"] + '</span>' + '<br>' + 'Total funding (£): ' + '<span style="color:grey;font-weight:bold;">' + row["Total funding (£)"] + '</span>' + '<br>'+ URL + '</a>' + '<br>' + 'Project Title: ' + '<span style="color:grey;font-weight:bold;">' + row["Project Title"] + '</span>' + '<br>' + '</p>', {maxwidth: 500});
+					var marker = L.marker([row.Latitude, row.Longitude], {icon: vaccineIcon}).bindPopup(
+						`<h3>` + row.Institution + `</h3>` + '<p style="text-align:left;">' + 'Type of Research: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Type of Research (Vaccine, Diagnostic, Therapeutic)"] + '</span>' + '<br>' + 'Total funding (€): ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Total funding (€)"] + '</span>' + '<br>' + 'Funding Mechanism: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Funding Mechanism"] + '</span>' + '<br>' + 'Project Title: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Project Title"] + '</span>' + '<br>' + 'Grant Period: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Grant Period"] + '</span>' + '<br>' + 'Research Stage: ' + '<span style="color:#353b8c;font-weight:bold;">' + row["Research Stage"] + '</span>' + '<br>'  + URL + '</span>' + '<br>' + '</p>', {maxwidth: 700});
 					marker.addTo(therapeutic);
 					break;
 			}
@@ -657,7 +683,7 @@
 					break;
 				case "Open COVID Pledge":
 					var marker = L.marker([row.Latitude, row.Longitude], {icon: opencovidIcon}).bindPopup(
-						`<h3>` + row.Institution + `</h3>` + '<p style="text-align:left;">' + 'The ' + '<span style="color:grey;font-weight:bold;">' + row["Pledge"] + '</span>' + ' includes a signatory from this University/Governmental-based Institution. ' + '<br>' + '<br>' + URL + '</p>', {maxwidth: 500}).addTo(mymap);
+						`<h3>` + row.Institution + `</h3>` + '<p style="text-align:left;">' + 'The ' + '<span style="color:grey;font-weight:bold;">' + row["Pledge"] + '</span>' + ' includes this University/Governmental-based Institution as a member. ' + '<br>' + '<br>' + URL + '</p>', {maxwidth: 500}).addTo(mymap);
 					marker.addTo(pledges);
 					break;
 			}
